@@ -1,0 +1,112 @@
+<div class="iam-shell">
+  <!-- ── Left: brand panel ── -->
+  <aside class="brand" aria-label="MediBridge branding">
+    <div class="brand-inner">
+      <header class="brand-top">
+        <div class="logo-row">
+          <svg class="logo-mark" width="36" height="36" viewBox="0 0 36 36" fill="none" aria-hidden="true">
+            <rect width="36" height="36" rx="9" fill="white" fill-opacity="0.18" />
+            <path d="M11 25V14l7 9 7-9v11" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+          <span class="logo-name">MediBridge</span>
+        </div>
+      </header>
+
+      <div class="brand-body">
+        <h2 class="brand-headline">Clinical Platform</h2>
+        <p class="brand-desc">Secure, compliant access to your healthcare management dashboard.</p>
+
+        <ul class="trust-list">
+          <li class="trust-item">
+            <span class="trust-marker" aria-hidden="true">
+              <svg width="16" height="16" viewBox="0 0 16 16"><circle cx="8" cy="8" r="7.5" fill="none" stroke="white" stroke-opacity="0.35" stroke-width="1"/><path d="M5 8l2 2 4-4" stroke="white" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+            <span class="trust-text"><strong>End-to-end encrypted</strong> sessions</span>
+          </li>
+          <li class="trust-item">
+            <span class="trust-marker" aria-hidden="true">
+              <svg width="16" height="16" viewBox="0 0 16 16"><circle cx="8" cy="8" r="7.5" fill="none" stroke="white" stroke-opacity="0.35" stroke-width="1"/><path d="M5 8l2 2 4-4" stroke="white" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+            <span class="trust-text"><strong>Role-based access</strong> tailored to your practice</span>
+          </li>
+          <li class="trust-item">
+            <span class="trust-marker" aria-hidden="true">
+              <svg width="16" height="16" viewBox="0 0 16 16"><circle cx="8" cy="8" r="7.5" fill="none" stroke="white" stroke-opacity="0.35" stroke-width="1"/><path d="M5 8l2 2 4-4" stroke="white" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+            <span class="trust-text"><strong>24/7 availability</strong> with platform monitoring</span>
+          </li>
+        </ul>
+      </div>
+
+      <footer class="brand-footer">
+        <small>&copy; 2026 MediBridge</small>
+      </footer>
+    </div>
+  </aside>
+
+  <!-- ── Right: form panel ── -->
+  <main class="form-panel">
+    <div class="form-wrap">
+      <header class="form-header">
+        <p class="form-eyebrow">Welcome back</p>
+        <h1 class="form-title">Sign in to your account</h1>
+        <p class="form-support">Enter your credentials to continue</p>
+      </header>
+
+      @if (registered()) {
+        <div class="banner banner--success" role="alert">
+          Account created successfully. Please sign in.
+        </div>
+      }
+
+      @if (serverError()) {
+        <div class="banner banner--error" role="alert">{{ serverError() }}</div>
+      }
+
+      <form [formGroup]="form" (ngSubmit)="onSubmit()" novalidate>
+        <div class="field">
+          <label for="username">Username</label>
+          <input
+            id="username"
+            type="text"
+            formControlName="username"
+            autocomplete="username"
+            placeholder="Enter your username"
+          />
+          @if (form.controls.username.touched && form.controls.username.hasError('required')) {
+            <div class="field-error">Username is required.</div>
+          }
+          @if (form.controls.username.touched && form.controls.username.hasError('minlength')) {
+            <div class="field-error">Username must be at least 3 characters.</div>
+          }
+        </div>
+
+        <div class="field">
+          <label for="password">Password</label>
+          <input
+            id="password"
+            type="password"
+            formControlName="password"
+            autocomplete="current-password"
+            placeholder="Enter your password"
+          />
+          @if (form.controls.password.touched && form.controls.password.hasError('required')) {
+            <div class="field-error">Password is required.</div>
+          }
+          @if (form.controls.password.touched && form.controls.password.hasError('minlength')) {
+            <div class="field-error">Password must be at least 4 characters.</div>
+          }
+        </div>
+
+        <button type="submit" [disabled]="form.invalid || isSubmitting()">
+          {{ isSubmitting() ? 'Signing in …' : 'Sign In' }}
+        </button>
+      </form>
+
+      <p class="form-footer">
+        Don't have an account?
+        <a routerLink="/register">Create one</a>
+      </p>
+    </div>
+  </main>
+</div>
