@@ -72,7 +72,7 @@ export class RegisterPageComponent {
   readonly form = inject(FormBuilder).nonNullable.group({
     username: ['', [Validators.required, Validators.minLength(3)]],
     password: ['', [Validators.required, Validators.minLength(4)]],
-    role: [UserRole.PATIENT, [Validators.required]],
+    roles: [[UserRole.FAMILY_MEMBER] as UserRole[], [Validators.required]],
   });
 
   onSubmit(): void {
@@ -81,7 +81,12 @@ export class RegisterPageComponent {
     this.isSubmitting.set(true);
     this.serverError.set(null);
 
-    const data = this.form.value as SignUpRequest;
+    const formValue = this.form.value;
+    const data: SignUpRequest = {
+      username: formValue.username!,
+      password: formValue.password!,
+      roles: formValue.roles!,
+    };
 
     this.facade.register(data).subscribe({
       error: (err) => {

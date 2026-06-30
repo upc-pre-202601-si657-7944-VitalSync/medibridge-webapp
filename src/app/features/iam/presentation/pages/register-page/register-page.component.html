@@ -100,19 +100,19 @@
            }
         </div>
 
-        <div class="field">
-          <label for="role">{{ 'auth.register.role' | translate }}</label>
-          <select id="role" formControlName="role">
-          <option value="PATIENT">{{ 'auth.register.roles.PATIENT' | translate }}</option>
-          <option value="DOCTOR">{{ 'auth.register.roles.DOCTOR' | translate }}</option>
-          <option value="FAMILY_MEMBER">{{ 'auth.register.roles.FAMILY_MEMBER' | translate }}</option>
-          <option value="CAREGIVER">{{ 'auth.register.roles.CAREGIVER' | translate }}</option>
-          </select>
-          <div class="field-hint">{{ 'auth.register.roleHint' | translate }}</div>
-           @if (form.controls.role.touched && form.controls.role.hasError('required')) {
-             <div class="field-error">{{ 'auth.errors.roleRequired' | translate }}</div>
-           }
-        </div>
+         <div class="field">
+           <label for="roles">{{ 'auth.register.role' | translate }}</label>
+           <select id="roles" formControlName="roles" multiple size="4">
+           <option value="PATIENT">{{ 'auth.register.roles.PATIENT' | translate }}</option>
+           <option value="DOCTOR">{{ 'auth.register.roles.DOCTOR' | translate }}</option>
+           <option value="FAMILY_MEMBER">{{ 'auth.register.roles.FAMILY_MEMBER' | translate }}</option>
+           <option value="CAREGIVER">{{ 'auth.register.roles.CAREGIVER' | translate }}</option>
+           </select>
+           <div class="field-hint">{{ 'auth.register.roleHint' | translate }}</div>
+            @if (form.controls.roles.touched && form.controls.roles.hasError('required')) {
+              <div class="field-error">{{ 'auth.errors.roleRequired' | translate }}</div>
+            }
+         </div>
 
         <button type="submit" [disabled]="form.invalid || isSubmitting()">
           {{ isSubmitting() ? ('auth.register.submitting' | translate) : ('auth.register.submit' | translate) }}
