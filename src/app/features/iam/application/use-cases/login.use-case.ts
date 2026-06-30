@@ -1,6 +1,6 @@
 import { Injectable, inject } from '@angular/core';
 import { Router } from '@angular/router';
-import { Observable, tap, catchError, throwError, map } from 'rxjs';
+import { Observable, tap, map } from 'rxjs';
 import { IamApiService } from '../../infrastructure';
 import { mapAuthResponseToUser } from '../../infrastructure';
 import { AuthStore } from '../../../../core/auth/auth.store';
@@ -20,9 +20,6 @@ export class LoginUseCase {
         this.router.navigate(['/home']);
       }),
       map(() => undefined),
-      catchError((err) => {
-        return throwError(() => err);
-      }),
     );
   }
 }
