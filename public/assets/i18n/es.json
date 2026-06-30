@@ -1,0 +1,59 @@
+{
+  "auth": {
+    "login": {
+      "title": "Inicia sesión en tu cuenta",
+      "eyebrow": "Bienvenido de nuevo",
+      "username": "Usuario",
+      "password": "Contraseña",
+      "submit": "Iniciar sesión",
+      "submitting": "Ingresando …",
+      "noAccount": "¿No tienes una cuenta?",
+      "createAccount": "Crear una",
+      "registeredSuccess": "Cuenta creada exitosamente. Inicia sesión.",
+      "placeholderUsername": "Ingresa tu usuario",
+      "placeholderPassword": "Ingresa tu contraseña"
+    },
+    "register": {
+      "title": "Crea tu cuenta",
+      "subtitle": "Únete a MediBridge hoy",
+      "username": "Usuario",
+      "password": "Contraseña",
+      "role": "Rol",
+      "submit": "Registrarme",
+      "submitting": "Creando cuenta …",
+      "hasAccount": "¿Ya tienes una cuenta?",
+      "signIn": "Inicia sesión",
+      "roleHint": "Elige el rol que mejor te represente.",
+      "placeholderUsername": "Elige un usuario",
+      "placeholderPassword": "Elige una contraseña",
+      "roles": {
+        "PATIENT": "Paciente",
+        "DOCTOR": "Doctor",
+        "FAMILY_MEMBER": "Familiar",
+        "CAREGIVER": "Cuidador"
+      }
+    },
+    "home": {
+      "welcome": "Bienvenido",
+      "info": "Has iniciado sesión en MediBridge. Esta es una página protegida — solo visible cuando tu sesión está activa.",
+      "logout": "Cerrar sesión"
+    },
+    "brand": {
+      "headline": "Plataforma Clínica",
+      "description": "Acceso seguro y cumpliente a tu panel de gestión de atención médica.",
+      "familyTitle": "Red de Apoyo Familiar",
+      "familyDesc": "Coordina cuidados, comparte actualizaciones y mantente conectado con la evolución clínica de tu ser querido.",
+      "staffTitle": "Personal de Cuidado",
+      "staffDesc": "Accede a paneles de pacientes, gestiona flujos clínicos y colabora con tu equipo de atención."
+    },
+    "errors": {
+      "usernameRequired": "El usuario es requerido.",
+      "usernameMin": "El usuario debe tener al menos 3 caracteres.",
+      "passwordRequired": "La contraseña es requerida.",
+      "passwordMin": "La contraseña debe tener al menos 4 caracteres.",
+      "roleRequired": "El rol es requerido.",
+      "loginFailed": "Error al iniciar sesión. Verifica tus credenciales.",
+      "registerFailed": "Error al registrarte. Intenta nuevamente."
+    }
+  }
+}
