@@ -4,22 +4,15 @@ import { UserRole } from '../../domain/enums/user-role.enum';
 
 /**
  * Maps backend auth payloads into frontend domain models.
- * Assumptions (based on the documented contracts):
- *  - The JWT `sub` claim carries the user id.
- *  - The JWT payload includes a `preferred_username` or `username` claim.
- *  - The JWT payload includes a `roles` array (at least one entry).
- *
- * If the actual backend shape differs, update this mapper in isolation.
+ * The backend now returns { id, username, token } directly.
+ * We decode the JWT only to extract roles (if present).
  */
 export function mapAuthResponseToUser(res: AuthResponse): User {
-  const payload = decodeJwtPayload(res.accessToken);
+  const payload = decodeJwtPayload(res.token);
 
   return {
-    id: (payload['sub'] as string) ?? '',
-    username:
-      (payload['preferred_username'] as string) ??
-      (payload['username'] as string) ??
-      '',
+    id: String(res.id),
+    username: res.username,
     role: pickRole(payload['roles']),
   };
 }

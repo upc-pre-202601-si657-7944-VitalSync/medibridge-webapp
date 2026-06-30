@@ -16,7 +16,7 @@ export class LoginUseCase {
     return this.api.signIn(credentials).pipe(
       tap((res) => {
         const user = mapAuthResponseToUser(res);
-        this.authStore.setSession(res.accessToken, user);
+        this.authStore.setSession(res.token, user);
         this.router.navigate(['/home']);
       }),
       map(() => undefined),
