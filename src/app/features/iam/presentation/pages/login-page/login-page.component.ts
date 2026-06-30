@@ -4,12 +4,14 @@ import { ActivatedRoute, RouterLink } from '@angular/router';
 import { map } from 'rxjs';
 import { IamFacade } from '../../../application';
 import { iamAuthSharedStyles } from '../../iam-auth-shared.styles';
+import { TranslatePipe } from '../../../../../i18n/translate.pipe';
+import { LanguageToggleComponent } from '../../../../../shared/language-toggle/language-toggle.component';
 import type { SignInRequest } from '../../../domain';
 
 @Component({
   selector: 'app-login-page',
   standalone: true,
-  imports: [ReactiveFormsModule, RouterLink],
+  imports: [ReactiveFormsModule, RouterLink, TranslatePipe, LanguageToggleComponent],
   templateUrl: './login-page.component.html',
   styles: [
     iamAuthSharedStyles,
@@ -59,6 +61,6 @@ export class LoginPageComponent {
 
   #extractMessage(err: unknown): string {
     if (err instanceof Error) return err.message;
-    return 'Sign in failed. Please check your credentials.';
+    return 'auth.errors.loginFailed';
   }
 }

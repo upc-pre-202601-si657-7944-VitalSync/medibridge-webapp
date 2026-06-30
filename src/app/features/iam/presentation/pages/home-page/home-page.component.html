@@ -1,13 +1,12 @@
 <div class="home-card">
   <header class="home-header">
-    <h1 class="home-greeting">Welcome, {{ authStore.currentUser()?.username ?? 'User' }}</h1>
+    <h1 class="home-greeting">{{ 'auth.home.welcome' | translate }}, {{ authStore.currentUser()?.username ?? 'User' }}</h1>
     <span class="home-role">{{ authStore.currentUser()?.role ?? '' }}</span>
   </header>
 
   <p class="home-info">
-    You are signed in to <strong>MediBridge</strong>.
-    This is a protected page — only visible when your session is active.
+    {{ 'auth.home.info' | translate }}
   </p>
 
-  <button type="button" class="logout-btn" (click)="logout()">Logout</button>
+  <button type="button" class="logout-btn" (click)="logout()">{{ 'auth.home.logout' | translate }}</button>
 </div>

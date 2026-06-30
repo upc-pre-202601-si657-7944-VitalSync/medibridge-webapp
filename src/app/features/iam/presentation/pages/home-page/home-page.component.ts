@@ -1,10 +1,12 @@
 import { Component, inject } from '@angular/core';
 import { AuthStore } from '../../../../../core/auth/auth.store';
 import { IamFacade } from '../../../application';
+import { SharedI18nModule } from '../../../../../shared/shared-i18n.module';
 
 @Component({
   selector: 'app-home-page',
   standalone: true,
+  imports: [SharedI18nModule],
   templateUrl: './home-page.component.html',
   styles: [
     `

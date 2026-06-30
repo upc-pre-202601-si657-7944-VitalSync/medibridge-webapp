@@ -21,6 +21,7 @@ export const iamAuthSharedStyles = `
     grid-template-columns: 1.15fr 0.85fr;
     width: 100%;
     max-width: 90rem;
+    min-height: 42rem;
     border-radius: 1.5rem;
     background: #fff;
     box-shadow: 0 0.25rem 1.5rem rgba(0, 0, 0, 0.06),
@@ -48,13 +49,20 @@ export const iamAuthSharedStyles = `
   .logo-row {
     display: flex;
     align-items: center;
-    gap: 0.75rem;
+    justify-content: center;
+    gap: 0.5rem;
+  }
+
+  .logo-mark {
+    display: block;
+    flex-shrink: 0;
+    width: 4.5rem;
+    height: 4.5rem;
   }
 
   .logo-name {
-    font-size: 1.25rem;
+    font-size: 2rem;
     font-weight: 700;
-    letter-spacing: -0.02em;
   }
 
   .brand-body {
@@ -62,40 +70,60 @@ export const iamAuthSharedStyles = `
   }
 
   .brand-headline {
-    font-size: 2rem;
+    font-size: 3rem;
     font-weight: 700;
-    line-height: 1.2;
-    margin: 0 0 1rem;
+    line-height: 1.15;
+    margin: 0 0 1.25rem;
     letter-spacing: -0.02em;
   }
 
   .brand-desc {
-    font-size: 1rem;
+    font-size: 1.125rem;
     line-height: 1.6;
     opacity: 0.85;
     margin: 0 0 2.5rem;
-    max-width: 24rem;
+    max-width: 30rem;
   }
 
-  .trust-list {
+  .audience-list {
     list-style: none;
     display: flex;
     flex-direction: column;
+    gap: 1.5rem;
+    margin: 0;
+    padding: 0;
+  }
+
+  .audience-card {
+    display: flex;
+    align-items: flex-start;
     gap: 1rem;
   }
 
-  .trust-item {
+  .audience-icon {
+    flex-shrink: 0;
     display: flex;
-    align-items: flex-start;
-    gap: 0.75rem;
-    font-size: 0.9375rem;
-    line-height: 1.5;
-    opacity: 0.9;
+    align-items: center;
+    justify-content: center;
   }
 
-  .trust-marker {
-    flex-shrink: 0;
-    margin-top: 0.125rem;
+  .audience-body {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .audience-title {
+    font-size: 1.0625rem;
+    font-weight: 600;
+    line-height: 1.3;
+  }
+
+  .audience-desc {
+    font-size: 0.875rem;
+    line-height: 1.5;
+    opacity: 0.75;
+    max-width: 22rem;
   }
 
   .brand-footer {
@@ -109,6 +137,13 @@ export const iamAuthSharedStyles = `
     align-items: center;
     justify-content: center;
     padding: 3rem;
+    position: relative;
+  }
+
+  .lang-toggle-wrapper {
+    position: absolute;
+    top: 1.5rem;
+    right: 1.5rem;
   }
 
   .form-wrap {

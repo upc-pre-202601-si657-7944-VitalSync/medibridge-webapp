@@ -3,12 +3,14 @@ import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { IamFacade } from '../../../application';
 import { iamAuthSharedStyles } from '../../iam-auth-shared.styles';
+import { TranslatePipe } from '../../../../../i18n/translate.pipe';
+import { LanguageToggleComponent } from '../../../../../shared/language-toggle/language-toggle.component';
 import { UserRole, type SignUpRequest } from '../../../domain';
 
 @Component({
   selector: 'app-register-page',
   standalone: true,
-  imports: [ReactiveFormsModule, RouterLink],
+  imports: [ReactiveFormsModule, RouterLink, TranslatePipe, LanguageToggleComponent],
   templateUrl: './register-page.component.html',
   styles: [
     iamAuthSharedStyles,
@@ -92,6 +94,6 @@ export class RegisterPageComponent {
 
   #extractMessage(err: unknown): string {
     if (err instanceof Error) return err.message;
-    return 'Registration failed. Please try again.';
+    return 'auth.errors.registerFailed';
   }
 }

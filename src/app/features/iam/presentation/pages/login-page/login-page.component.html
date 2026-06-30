@@ -4,36 +4,41 @@
     <div class="brand-inner">
       <header class="brand-top">
         <div class="logo-row">
-          <svg class="logo-mark" width="36" height="36" viewBox="0 0 36 36" fill="none" aria-hidden="true">
-            <rect width="36" height="36" rx="9" fill="white" fill-opacity="0.18" />
-            <path d="M11 25V14l7 9 7-9v11" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
-          </svg>
+          <img class="logo-mark" src="/medi-bridge-logo.svg" alt="MediBridge logo" width="56" height="56" />
           <span class="logo-name">MediBridge</span>
         </div>
       </header>
 
       <div class="brand-body">
-        <h2 class="brand-headline">Clinical Platform</h2>
-        <p class="brand-desc">Secure, compliant access to your healthcare management dashboard.</p>
+        <h2 class="brand-headline">{{ 'auth.brand.headline' | translate }}</h2>
+        <p class="brand-desc">{{ 'auth.brand.description' | translate }}</p>
 
-        <ul class="trust-list">
-          <li class="trust-item">
-            <span class="trust-marker" aria-hidden="true">
-              <svg width="16" height="16" viewBox="0 0 16 16"><circle cx="8" cy="8" r="7.5" fill="none" stroke="white" stroke-opacity="0.35" stroke-width="1"/><path d="M5 8l2 2 4-4" stroke="white" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <ul class="audience-list">
+          <li class="audience-card">
+            <span class="audience-icon" aria-hidden="true">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                <circle cx="9" cy="9" r="3.5" stroke="white" stroke-opacity="0.65" stroke-width="1.5"/>
+                <circle cx="18" cy="9" r="3.5" stroke="white" stroke-opacity="0.65" stroke-width="1.5"/>
+                <path d="M2 20c0-3.3 2.7-6 6-6h2c3.3 0 6 2.7 6 6" stroke="white" stroke-opacity="0.45" stroke-width="1.5" stroke-linecap="round"/>
+                <path d="M13 20c0-3.3 2.7-6 6-6h0c3.3 0 6 2.7 6 6" stroke="white" stroke-opacity="0.45" stroke-width="1.5" stroke-linecap="round"/>
+              </svg>
             </span>
-            <span class="trust-text"><strong>End-to-end encrypted</strong> sessions</span>
+            <div class="audience-body">
+            <span class="audience-title">{{ 'auth.brand.familyTitle' | translate }}</span>
+            <span class="audience-desc">{{ 'auth.brand.familyDesc' | translate }}</span>
+            </div>
           </li>
-          <li class="trust-item">
-            <span class="trust-marker" aria-hidden="true">
-              <svg width="16" height="16" viewBox="0 0 16 16"><circle cx="8" cy="8" r="7.5" fill="none" stroke="white" stroke-opacity="0.35" stroke-width="1"/><path d="M5 8l2 2 4-4" stroke="white" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <li class="audience-card">
+            <span class="audience-icon" aria-hidden="true">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                <rect x="4" y="5" width="16" height="14" rx="2" stroke="white" stroke-opacity="0.65" stroke-width="1.5"/>
+                <path d="M8 12h8M12 8v8" stroke="white" stroke-opacity="0.65" stroke-width="1.5" stroke-linecap="round"/>
+              </svg>
             </span>
-            <span class="trust-text"><strong>Role-based access</strong> tailored to your practice</span>
-          </li>
-          <li class="trust-item">
-            <span class="trust-marker" aria-hidden="true">
-              <svg width="16" height="16" viewBox="0 0 16 16"><circle cx="8" cy="8" r="7.5" fill="none" stroke="white" stroke-opacity="0.35" stroke-width="1"/><path d="M5 8l2 2 4-4" stroke="white" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </span>
-            <span class="trust-text"><strong>24/7 availability</strong> with platform monitoring</span>
+            <div class="audience-body">
+            <span class="audience-title">{{ 'auth.brand.staffTitle' | translate }}</span>
+            <span class="audience-desc">{{ 'auth.brand.staffDesc' | translate }}</span>
+            </div>
           </li>
         </ul>
       </div>
@@ -46,16 +51,18 @@
 
   <!-- ── Right: form panel ── -->
   <main class="form-panel">
+    <div class="lang-toggle-wrapper">
+      <app-language-toggle></app-language-toggle>
+    </div>
     <div class="form-wrap">
-      <header class="form-header">
-        <p class="form-eyebrow">Welcome back</p>
-        <h1 class="form-title">Sign in to your account</h1>
-        <p class="form-support">Enter your credentials to continue</p>
-      </header>
+        <header class="form-header">
+          <p class="form-eyebrow">{{ 'auth.login.eyebrow' | translate }}</p>
+          <h1 class="form-title">{{ 'auth.login.title' | translate }}</h1>
+        </header>
 
       @if (registered()) {
         <div class="banner banner--success" role="alert">
-          Account created successfully. Please sign in.
+           {{ 'auth.login.registeredSuccess' | translate }}
         </div>
       }
 
@@ -65,47 +72,47 @@
 
       <form [formGroup]="form" (ngSubmit)="onSubmit()" novalidate>
         <div class="field">
-          <label for="username">Username</label>
+          <label for="username">{{ 'auth.login.username' | translate }}</label>
           <input
             id="username"
             type="text"
             formControlName="username"
             autocomplete="username"
-            placeholder="Enter your username"
+            [placeholder]="'auth.login.placeholderUsername' | translate"
           />
-          @if (form.controls.username.touched && form.controls.username.hasError('required')) {
-            <div class="field-error">Username is required.</div>
-          }
-          @if (form.controls.username.touched && form.controls.username.hasError('minlength')) {
-            <div class="field-error">Username must be at least 3 characters.</div>
-          }
+           @if (form.controls.username.touched && form.controls.username.hasError('required')) {
+             <div class="field-error">{{ 'auth.errors.usernameRequired' | translate }}</div>
+           }
+           @if (form.controls.username.touched && form.controls.username.hasError('minlength')) {
+             <div class="field-error">{{ 'auth.errors.usernameMin' | translate }}</div>
+           }
         </div>
 
         <div class="field">
-          <label for="password">Password</label>
+          <label for="password">{{ 'auth.login.password' | translate }}</label>
           <input
             id="password"
             type="password"
             formControlName="password"
             autocomplete="current-password"
-            placeholder="Enter your password"
+            [placeholder]="'auth.login.placeholderPassword' | translate"
           />
-          @if (form.controls.password.touched && form.controls.password.hasError('required')) {
-            <div class="field-error">Password is required.</div>
-          }
-          @if (form.controls.password.touched && form.controls.password.hasError('minlength')) {
-            <div class="field-error">Password must be at least 4 characters.</div>
-          }
+           @if (form.controls.password.touched && form.controls.password.hasError('required')) {
+             <div class="field-error">{{ 'auth.errors.passwordRequired' | translate }}</div>
+           }
+           @if (form.controls.password.touched && form.controls.password.hasError('minlength')) {
+             <div class="field-error">{{ 'auth.errors.passwordMin' | translate }}</div>
+           }
         </div>
 
         <button type="submit" [disabled]="form.invalid || isSubmitting()">
-          {{ isSubmitting() ? 'Signing in …' : 'Sign In' }}
+          {{ isSubmitting() ? ('auth.login.submitting' | translate) : ('auth.login.submit' | translate) }}
         </button>
       </form>
 
       <p class="form-footer">
-        Don't have an account?
-        <a routerLink="/register">Create one</a>
+        {{ 'auth.login.noAccount' | translate }}
+        <a routerLink="/register">{{ 'auth.login.createAccount' | translate }}</a>
       </p>
     </div>
   </main>
