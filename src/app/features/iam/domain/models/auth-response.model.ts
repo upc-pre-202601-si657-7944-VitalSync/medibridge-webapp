@@ -1,9 +1,8 @@
 /**
- * Shape of POST /api/v1/authentication/sign-in response.
- * `expiresIn` is in seconds.
+ * Shape of POST /api/v1/authentication/sign-in response (real contract).
  */
 export interface AuthResponse {
-  readonly accessToken: string;
-  readonly tokenType: 'Bearer';
-  readonly expiresIn: number;
+  readonly id: number;
+  readonly username: string;
+  readonly token: string;
 }
