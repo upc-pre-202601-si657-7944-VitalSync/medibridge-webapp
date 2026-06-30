@@ -4,8 +4,8 @@ import { ActivatedRoute, RouterLink } from '@angular/router';
 import { map } from 'rxjs';
 import { IamFacade } from '../../../application';
 import { iamAuthSharedStyles } from '../../iam-auth-shared.styles';
-import { TranslatePipe } from '../../../../../i18n/translate.pipe';
-import { LanguageToggleComponent } from '../../../../../shared/language-toggle/language-toggle.component';
+import { TranslatePipe } from '../../../../../../app/i18n/translate.pipe';
+import { LanguageToggleComponent } from '../../../../../../app/shared/language-toggle/language-toggle.component';
 import type { SignInRequest } from '../../../domain';
 
 @Component({
