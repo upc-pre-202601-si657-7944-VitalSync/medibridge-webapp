@@ -36,10 +36,6 @@ import { UserRole, type SignUpRequest } from '../../../domain';
         cursor: pointer;
       }
 
-      select:invalid {
-        color: #94a3b8;
-      }
-
       select:focus {
         outline: none;
         border-color: #2563eb;
@@ -66,13 +62,24 @@ import { UserRole, type SignUpRequest } from '../../../domain';
 export class RegisterPageComponent {
   private readonly facade = inject(IamFacade);
 
+  readonly registrationRoleOptions = [
+    {
+      value: UserRole.FAMILY_MEMBER,
+      labelKey: 'auth.register.segments.familySupportNetwork',
+    },
+    {
+      value: UserRole.CAREGIVER,
+      labelKey: 'auth.register.segments.careStaff',
+    },
+  ] as const;
+
   readonly serverError = signal<string | null>(null);
   readonly isSubmitting = signal(false);
 
   readonly form = inject(FormBuilder).nonNullable.group({
     username: ['', [Validators.required, Validators.minLength(3)]],
     password: ['', [Validators.required, Validators.minLength(4)]],
-    roles: [[UserRole.FAMILY_MEMBER] as UserRole[], [Validators.required]],
+    selectedRole: [UserRole.FAMILY_MEMBER, [Validators.required]],
   });
 
   onSubmit(): void {
@@ -85,7 +92,7 @@ export class RegisterPageComponent {
     const data: SignUpRequest = {
       username: formValue.username!,
       password: formValue.password!,
-      roles: formValue.roles!,
+      roles: [formValue.selectedRole!],
     };
 
     this.facade.register(data).subscribe({

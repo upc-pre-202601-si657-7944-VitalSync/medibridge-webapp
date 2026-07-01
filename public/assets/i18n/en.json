@@ -23,9 +23,13 @@
       "submitting": "Creating account …",
       "hasAccount": "Already have an account?",
       "signIn": "Sign in",
-      "roleHint": "Choose the role that best matches you.",
+      "roleHint": "Select the account type you want to use to access the platform.",
       "placeholderUsername": "Choose a username",
       "placeholderPassword": "Choose a password",
+      "segments": {
+        "familySupportNetwork": "Family Support Network",
+        "careStaff": "Care Staff"
+      },
       "roles": {
         "PATIENT": "Patient",
         "DOCTOR": "Doctor",

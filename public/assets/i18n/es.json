@@ -23,9 +23,13 @@
       "submitting": "Creando cuenta …",
       "hasAccount": "¿Ya tienes una cuenta?",
       "signIn": "Inicia sesión",
-      "roleHint": "Elige el rol que mejor te represente.",
+      "roleHint": "Selecciona el tipo de cuenta con el que querés ingresar a la plataforma.",
       "placeholderUsername": "Elige un usuario",
       "placeholderPassword": "Elige una contraseña",
+      "segments": {
+        "familySupportNetwork": "Red de Apoyo Familiar",
+        "careStaff": "Personal de Cuidado"
+      },
       "roles": {
         "PATIENT": "Paciente",
         "DOCTOR": "Doctor",
