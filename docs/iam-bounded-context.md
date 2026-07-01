@@ -51,16 +51,24 @@ http://localhost:8080/api/v1/...
 
 **Purpose:** Register a new user in the system.
 
-**Request Body (expected):**
+**Request Body (real contract):**
 ```json
 {
   "username": "string",
   "password": "string",
-  "role": "string"   // e.g., "PATIENT", "DOCTOR", "FAMILY_MEMBER"
+  "roles": ["string"]   // Array of roles, e.g. ["PATIENT"], ["FAMILY_MEMBER", "CAREGIVER"]
 }
 ```
 
-**Success Response:** `201 Created`  
+**Success Response:** `200 OK` + `UserResource`
+```json
+{
+  "id": 0,
+  "username": "string",
+  "roles": ["string"]
+}
+```
+
 **Error Responses:**
 - `400 Bad Request` — validation errors
 - `409 Conflict` — username already exists
@@ -83,12 +91,12 @@ http://localhost:8080/api/v1/...
 }
 ```
 
-**Success Response:** `200 OK`
+**Success Response:** `200 OK` + `AuthenticatedUserResource`
 ```json
 {
-  "accessToken": "eyJhbGciOiJSUzI1NiIs...",
-  "tokenType": "Bearer",
-  "expiresIn": 3600
+  "id": 0,
+  "username": "string",
+  "token": "eyJhbGciOiJSUzI1NiIs..."
 }
 ```
 
@@ -100,6 +108,7 @@ http://localhost:8080/api/v1/...
 - Algorithm: **RS256** (RSA + SHA-256)
 - Signed with the private key managed by the IAM service
 - Contains standard claims (`sub`, `iat`, `exp`, `roles`, etc.)
+- The token is returned directly in the `token` field of the response (no separate `accessToken` / `tokenType` / `expiresIn` wrapper)
 
 ---
 
@@ -188,6 +197,17 @@ X-Internal-Token: <shared-internal-token>
 
 ---
 
+## 4.1 Actual API Contract (from OpenAPI)
+
+The production API Gateway exposes the following real contract for IAM:
+
+- `POST /api/v1/authentication/sign-up` → `roles` is an array of strings
+- `POST /api/v1/authentication/sign-in` → returns `{ id, username, token }`
+- Additional endpoints: `GET /api/v1/users`, `GET /api/v1/users/{userId}`, `GET /api/v1/roles`
+- Security scheme declared as `bearerAuth` (JWT)
+
+---
+
 ## 5. Domain Events
 
 | Event              | Trigger                    | Destination     | Purpose |
@@ -232,11 +252,12 @@ X-Internal-Token: <shared-internal-token>
 
 When implementing the **IAM Feature Module** in the Angular frontend, the following contracts must be respected:
 
-- Use `POST /api/v1/authentication/sign-in` for login
+- Use `POST /api/v1/authentication/sign-in` for login — response is `{ id, username, token }`
+- Use `POST /api/v1/authentication/sign-up` for registration — `roles` is sent as an array
 - Store the returned JWT securely (prefer `httpOnly` cookie or secure storage)
 - Include `Authorization: Bearer <token>` on all authenticated requests
 - Handle token expiration and refresh (future requirement)
-- Call `POST /api/v1/authentication/sign-up` for registration flows
+- The `LanguageToggleComponent` (ES | EN) is present on auth screens and reusable across the application
 - Never expose `X-Internal-Token` in the frontend — it is only for service-to-service communication
 
 ---
