@@ -55,5 +55,43 @@
       "loginFailed": "Sign in failed. Please check your credentials.",
       "registerFailed": "Registration failed. Please try again."
     }
+  },
+  "profiles": {
+    "sidebar": {
+      "familyProfile": "My Profile",
+      "patient": "My Patient",
+      "doctor": "Doctor"
+    },
+    "family": {
+      "title": "My Family Profile",
+      "fullName": "Full name",
+      "submit": "Save Profile",
+      "created": "Your family profile has already been registered."
+    },
+    "patient": {
+      "title": "My Patient",
+      "description": "Information of the linked patient.",
+      "loading": "Loading patient information...",
+      "empty": "There is no linked patient to display yet.",
+      "profileRequired": "You must create your family profile first.",
+      "manualLinkLabel": "Enter the patient ID to link it manually",
+      "linkSubmit": "Link patient"
+    },
+    "doctor": {
+      "title": "Treating Physician",
+      "description": "Information of the assigned doctor.",
+      "loading": "Loading doctor information...",
+      "empty": "There is no assigned doctor to display yet.",
+      "backendGap": "We still cannot resolve the treating physician automatically from the current backend."
+    },
+    "common": {
+      "saving": "Saving..."
+    },
+    "errors": {
+      "createFailed": "Could not create profile. Please try again.",
+      "patientLoadFailed": "Could not load patient information.",
+      "patientLinkFailed": "Could not link the patient to your profile.",
+      "doctorLoadFailed": "Could not load doctor information."
+    }
   }
 }

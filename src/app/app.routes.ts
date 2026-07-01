@@ -8,4 +8,11 @@ export const routes: Routes = [
         (m) => m.iamRoutes,
       ),
   },
+  {
+    path: 'profiles',
+    loadChildren: () =>
+      import('./features/profiles/presentation/profiles.routes').then(
+        (m) => m.profilesRoutes,
+      ),
+  },
 ];
