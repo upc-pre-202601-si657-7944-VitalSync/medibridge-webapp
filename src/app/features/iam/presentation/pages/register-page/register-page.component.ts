@@ -6,6 +6,7 @@ import { iamAuthSharedStyles } from '../../iam-auth-shared.styles';
 import { TranslatePipe } from '../../../../../../app/i18n/translate.pipe';
 import { LanguageToggleComponent } from '../../../../../../app/shared/language-toggle/language-toggle.component';
 import { UserRole, type SignUpRequest } from '../../../domain';
+import { mapFrontendRoleToBackend } from '../../../domain/role-mapping';
 
 @Component({
   selector: 'app-register-page',
@@ -92,7 +93,7 @@ export class RegisterPageComponent {
     const data: SignUpRequest = {
       username: formValue.username!,
       password: formValue.password!,
-      roles: [formValue.selectedRole!],
+      roles: [mapFrontendRoleToBackend(formValue.selectedRole!)],
     };
 
     this.facade.register(data).subscribe({

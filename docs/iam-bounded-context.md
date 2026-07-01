@@ -4,7 +4,7 @@
 **Bounded Context:** Identity and Access Management (IAM)  
 **Source of Truth:** `medibridge.microservices` → `services/iam-service`  
 **Version:** Angular 21 + Spring Boot (Backend)  
-**Last Updated:** 2026-06-29
+**Last Updated:** 2026-07-01
 
 ---
 
@@ -42,35 +42,59 @@ This context is the **entry point** for all users (patients, doctors, family mem
 All endpoints are exposed through the **API Gateway** at:
 
 ```
+# Development
 http://localhost:8080/api/v1/...
+
+# Production (Render)
+https://medibridge-api-gateway.onrender.com/api/v1/...
+https://medibridge-iam-service.onrender.com/api/v1/...   (direct IAM)
 ```
 
-### 3.1 Authentication Endpoints
+### 3.1 Valid Roles
+
+The IAM service only accepts these two role values:
+
+| Role | Description |
+|------|-------------|
+| `ROLE_USER` | Default role for all registered users (Family Support Network, Care Staff, Patients, Doctors) |
+| `ROLE_ADMIN` | Administrative role |
+
+**Frontend ↔ Backend Role Mapping:**
+
+| Frontend Segment | UserRole enum | Backend Role (sent to API) |
+|-----------------|---------------|---------------------------|
+| Family Support Network | `FAMILY_MEMBER` | `ROLE_USER` |
+| Care Staff | `CAREGIVER` | `ROLE_USER` |
+
+Any other role value returns `401 Unauthorized` (the deployed version returns 401 for invalid roles instead of 400 as the source code suggests).
+
+### 3.2 Authentication Endpoints
 
 #### `POST /api/v1/authentication/sign-up`
 
 **Purpose:** Register a new user in the system.
 
-**Request Body (real contract):**
+**Request Body (verified 2026-07-01):**
 ```json
 {
   "username": "string",
   "password": "string",
-  "roles": ["string"]   // Array of roles, e.g. ["PATIENT"], ["FAMILY_MEMBER", "CAREGIVER"]
+  "roles": ["ROLE_USER"]
 }
 ```
 
-**Success Response:** `200 OK` + `UserResource`
+**Success Response:** `201 Created` + `UserResource`
 ```json
 {
-  "id": 0,
-  "username": "string",
-  "roles": ["string"]
+  "id": 2,
+  "username": "Catalina",
+  "roles": ["ROLE_USER"]
 }
 ```
 
 **Error Responses:**
-- `400 Bad Request` — validation errors
+- `400 Bad Request` — validation errors (per source code, may return 401 in deployed version)
+- `401 Unauthorized` — invalid role string (deployed behavior)
 - `409 Conflict` — username already exists
 
 **Side Effects:**
@@ -112,7 +136,7 @@ http://localhost:8080/api/v1/...
 
 ---
 
-### 3.2 Public Key Exposure
+### 3.3 Public Key Exposure
 
 #### `GET /api/v1/jwks/.well-known/jwks.json`
 
@@ -143,7 +167,7 @@ Other services (Profiles, Appointments, etc.) use this endpoint at startup or vi
 
 ---
 
-### 3.3 Internal Endpoints (Protected)
+### 3.4 Internal Endpoints (Protected)
 
 These endpoints are intended **only** for communication between microservices via the API Gateway. They require the `X-Internal-Token` header.
 
@@ -197,14 +221,27 @@ X-Internal-Token: <shared-internal-token>
 
 ---
 
-## 4.1 Actual API Contract (from OpenAPI)
+## 4.1 Verified API Contract (tested via curl 2026-07-01)
 
-The production API Gateway exposes the following real contract for IAM:
+The production endpoints were verified against `medibridge-iam-service.onrender.com`:
 
-- `POST /api/v1/authentication/sign-up` → `roles` is an array of strings
-- `POST /api/v1/authentication/sign-in` → returns `{ id, username, token }`
+- `POST /api/v1/authentication/sign-up` → `roles` must be `["ROLE_USER"]` or `["ROLE_ADMIN"]`. Returns `201 Created` with `{ id, username, roles }`. Invalid role strings return `401`.
+- `POST /api/v1/authentication/sign-in` → returns `{ id, username, token }` (JWT RS256). Valid for both roles.
+- `GET /api/v1/jwks/.well-known/jwks.json` → public JWKS endpoint, returns RSA public key
 - Additional endpoints: `GET /api/v1/users`, `GET /api/v1/users/{userId}`, `GET /api/v1/roles`
-- Security scheme declared as `bearerAuth` (JWT)
+
+### Verified Test Accounts
+
+| Username | Password | Role | ID | Status |
+|----------|----------|------|----|--------|
+| `Catalina` | `Cata123` | `ROLE_USER` | 2 | Created + Login OK |
+| `TESTAdmin` | `Admin123` | `ROLE_ADMIN` | 3 | Created + Login OK |
+| `Maria` | `Maria123` | `ROLE_ADMIN` | 4 | Created + Login OK |
+| `Carlos` | `Carlos123` | `ROLE_USER` | 5 | Created + Login OK |
+
+### Role strings tested and rejected (401)
+
+`FAMILY_MEMBER`, `CAREGIVER`, `PATIENT`, `DOCTOR`, `FOOBAR`, `INVALID_ROLE` — all return `401 Unauthorized` instead of `400 Bad Request` (backend source code discrepancy).
 
 ---
 
