@@ -2,17 +2,8 @@ import { Injectable } from '@angular/core';
 
 const TOKEN_KEY = 'mb_access_token';
 const USER_KEY = 'mb_user';
+const ROLE_KEY = 'mb_user_roles';
 
-/**
- * Stores and retrieves the JWT token and serialized user object
- * from localStorage.
- *
- * Trade-off: localStorage is vulnerable to XSS. For a production app
- * with stricter security requirements, prefer an httpOnly cookie
- * managed by the backend, or use a service worker with the
- * Credential Management API. localStorage is acceptable here as
- * the backend is already a known local service during early development.
- */
 @Injectable({ providedIn: 'root' })
 export class TokenStorageService {
   getToken(): string | null {
@@ -42,5 +33,25 @@ export class TokenStorageService {
   clear(): void {
     localStorage.removeItem(TOKEN_KEY);
     localStorage.removeItem(USER_KEY);
+  }
+
+  getRole(username: string): string | null {
+    const map = this.#readRoleMap();
+    return map[username] ?? null;
+  }
+
+  setRole(username: string, role: string): void {
+    const map = this.#readRoleMap();
+    map[username] = role;
+    localStorage.setItem(ROLE_KEY, JSON.stringify(map));
+  }
+
+  #readRoleMap(): Record<string, string> {
+    try {
+      const raw = localStorage.getItem(ROLE_KEY);
+      return raw ? (JSON.parse(raw) as Record<string, string>) : {};
+    } catch {
+      return {};
+    }
   }
 }

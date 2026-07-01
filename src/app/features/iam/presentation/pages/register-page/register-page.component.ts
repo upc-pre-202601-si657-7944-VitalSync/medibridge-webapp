@@ -94,6 +94,7 @@ export class RegisterPageComponent {
       username: formValue.username!,
       password: formValue.password!,
       roles: [mapFrontendRoleToBackend(formValue.selectedRole!)],
+      frontendRole: formValue.selectedRole!,
     };
 
     this.facade.register(data).subscribe({
