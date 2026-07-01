@@ -7,16 +7,21 @@ export const BackendRole = {
 
 export type BackendRole = (typeof BackendRole)[keyof typeof BackendRole];
 
-export function mapFrontendRoleToBackend(_frontendRole: UserRole): string {
-  return BackendRole.ROLE_USER;
+const FRONTEND_TO_BACKEND: Record<string, string> = {
+  [UserRole.FAMILY_MEMBER]: BackendRole.ROLE_ADMIN,
+  [UserRole.CAREGIVER]: BackendRole.ROLE_USER,
+};
+
+export function mapFrontendRoleToBackend(frontendRole: UserRole): string {
+  return FRONTEND_TO_BACKEND[frontendRole] ?? BackendRole.ROLE_USER;
 }
 
 const BACKEND_TO_FRONTEND: Record<string, UserRole> = {
-  [BackendRole.ROLE_USER]: UserRole.PATIENT,
-  [BackendRole.ROLE_ADMIN]: UserRole.PATIENT,
+  [BackendRole.ROLE_ADMIN]: UserRole.FAMILY_MEMBER,
+  [BackendRole.ROLE_USER]: UserRole.CAREGIVER,
 };
 
 export function mapBackendRoleToFrontend(backendRole: string): UserRole {
   const upperRole = backendRole.toUpperCase();
-  return BACKEND_TO_FRONTEND[upperRole] ?? UserRole.PATIENT;
+  return BACKEND_TO_FRONTEND[upperRole] ?? UserRole.CAREGIVER;
 }

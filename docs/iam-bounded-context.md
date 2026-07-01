@@ -63,7 +63,7 @@ The IAM service only accepts these two role values:
 
 | Frontend Segment | UserRole enum | Backend Role (sent to API) |
 |-----------------|---------------|---------------------------|
-| Family Support Network | `FAMILY_MEMBER` | `ROLE_USER` |
+| Family Support Network | `FAMILY_MEMBER` | `ROLE_ADMIN` |
 | Care Staff | `CAREGIVER` | `ROLE_USER` |
 
 Any other role value returns `401 Unauthorized` (the deployed version returns 401 for invalid roles instead of 400 as the source code suggests).
