@@ -6,7 +6,7 @@ import { GetDoctorUseCase } from '../use-cases/get-doctor.use-case';
 import type { CreateFamilyMemberData } from '../use-cases/create-family-member.use-case';
 import type { FamilyMember, Patient, Doctor } from '../../domain';
 
-@Injectable({ providedIn: 'root' })
+@Injectable()
 export class ProfilesFacade {
   private readonly createFamilyMemberUseCase = inject(CreateFamilyMemberUseCase);
   private readonly linkFamilyToPatientUseCase = inject(LinkFamilyToPatientUseCase);

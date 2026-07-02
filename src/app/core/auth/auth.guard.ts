@@ -30,6 +30,6 @@ export function guestGuard(): CanActivateFn {
     if (!authStore.isAuthenticated()) {
       return true;
     }
-    return router.createUrlTree(['/home']);
+    return router.createUrlTree(['/profiles']);
   };
 }

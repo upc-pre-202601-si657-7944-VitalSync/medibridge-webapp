@@ -1,9 +1,9 @@
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterLink, RouterLinkActive } from '@angular/router';
+import { RouterLink, RouterLinkActive, Router } from '@angular/router';
 import { IconComponent, type IconName } from '../../shared/icon.component';
 import { SharedI18nModule } from '../../shared/shared-i18n.module';
-import { IamFacade } from '../../features/iam/application';
+import { AuthStore } from '../../core/auth/auth.store';
 
 interface SidebarItem {
   labelKey: string;
@@ -143,7 +143,8 @@ interface SidebarItem {
   `]
 })
 export class FamilySidebarComponent {
-  private readonly iamFacade = inject(IamFacade);
+  private readonly authStore = inject(AuthStore);
+  private readonly router = inject(Router);
 
   readonly menuItems: SidebarItem[] = [
     { labelKey: 'profiles.sidebar.dashboard', icon: 'dashboard', route: '/profiles/dashboard' },
@@ -159,6 +160,7 @@ export class FamilySidebarComponent {
   ];
 
   logout(): void {
-    this.iamFacade.logout();
+    this.authStore.clearSession();
+    this.router.navigate(['/login']);
   }
 }
