@@ -1,10 +1,10 @@
 import { Component, inject, signal, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { ProfilesContextStore } from '../../../application';
-import { ReportsApiService, type ClinicalReport } from '../../../infrastructure/api/reports/reports-api.service';
-import { SharedI18nModule } from '../../../../../shared/shared-i18n.module';
-import { IconComponent } from '../../../../../shared/icon.component';
+import { ProfilesContextStore } from '../../../profiles/application';
+import { ReportsApiService, type ClinicalReport } from '../../infrastructure/api/reports-api\.service';
+import { SharedI18nModule } from '../../../../shared/shared-i18n.module';
+import { IconComponent } from '../../../../shared/icon.component';
 
 @Component({
   selector: 'app-reports-page',

@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { SharedI18nModule } from '../../../../../shared/shared-i18n.module';
-import { IconComponent } from '../../../../../shared/icon.component';
+import { SharedI18nModule } from '../../../../shared/shared-i18n.module';
+import { IconComponent } from '../../../../shared/icon.component';
 
 @Component({
   selector: 'app-settings-page',

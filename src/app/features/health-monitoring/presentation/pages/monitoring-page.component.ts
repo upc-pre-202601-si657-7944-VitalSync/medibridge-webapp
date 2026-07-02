@@ -1,9 +1,9 @@
 import { Component, inject, signal, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ProfilesContextStore } from '../../../application';
-import { HealthApiService, type HealthObservation } from '../../../infrastructure/api/health/health-api.service';
-import { SharedI18nModule } from '../../../../../shared/shared-i18n.module';
-import { IconComponent } from '../../../../../shared/icon.component';
+import { ProfilesContextStore } from '../../../profiles/application';
+import { HealthApiService, type HealthObservation } from '../../infrastructure/api/health-api\.service';
+import { SharedI18nModule } from '../../../../shared/shared-i18n.module';
+import { IconComponent } from '../../../../shared/icon.component';
 
 @Component({
   selector: 'app-monitoring-page',

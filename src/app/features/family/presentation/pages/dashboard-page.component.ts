@@ -1,14 +1,14 @@
 import { Component, inject, signal, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { AuthStore } from '../../../../../core/auth/auth.store';
-import { ProfilesContextStore } from '../../../application';
-import { AppointmentsApiService } from '../../../infrastructure/api/appointments/appointments-api.service';
-import { MedicationApiService } from '../../../infrastructure/api/medication/medication-api.service';
-import { CommunicationApiService } from '../../../infrastructure/api/communication/communication-api.service';
-import { HealthApiService } from '../../../infrastructure/api/health/health-api.service';
-import { SharedI18nModule } from '../../../../../shared/shared-i18n.module';
-import { IconComponent } from '../../../../../shared/icon.component';
+import { AuthStore } from '../../../../core/auth/auth.store';
+import { ProfilesContextStore } from '../../../profiles/application';
+import { AppointmentsApiService } from '../../../appointments/infrastructure/api/appointments-api.service';
+import { MedicationApiService } from '../../../medication/infrastructure/api/medication-api.service';
+import { CommunicationApiService } from '../../../communication/infrastructure/api/communication-api.service';
+import { HealthApiService } from '../../../health-monitoring/infrastructure/api/health-api.service';
+import { SharedI18nModule } from '../../../../shared/shared-i18n.module';
+import { IconComponent } from '../../../../shared/icon.component';
 
 @Component({
   selector: 'app-dashboard-page',

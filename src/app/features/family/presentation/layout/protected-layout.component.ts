@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
-import { FamilySidebarComponent } from './sidebar/family-sidebar.component';
+import { FamilySidebarComponent } from './family-sidebar.component';
 
 @Component({
   selector: 'app-protected-layout',

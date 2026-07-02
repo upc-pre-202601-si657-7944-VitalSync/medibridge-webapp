@@ -11,8 +11,8 @@ export const routes: Routes = [
   {
     path: 'family',
     loadChildren: () =>
-      import('./features/profiles/presentation/profiles.routes').then(
-        (m) => m.profilesRoutes,
+      import('./features/family/family.routes').then(
+        (m) => m.familyRoutes,
       ),
   },
 ];

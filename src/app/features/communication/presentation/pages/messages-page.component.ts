@@ -1,9 +1,9 @@
 import { Component, inject, signal, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { AuthStore } from '../../../../../core/auth/auth.store';
-import { CommunicationApiService, type Notification } from '../../../infrastructure/api/communication/communication-api.service';
-import { SharedI18nModule } from '../../../../../shared/shared-i18n.module';
-import { IconComponent } from '../../../../../shared/icon.component';
+import { AuthStore } from '../../../../core/auth/auth.store';
+import { CommunicationApiService, type Notification } from '../../infrastructure/api/communication-api.service';
+import { SharedI18nModule } from '../../../../shared/shared-i18n.module';
+import { IconComponent } from '../../../../shared/icon.component';
 
 @Component({
   selector: 'app-messages-page',

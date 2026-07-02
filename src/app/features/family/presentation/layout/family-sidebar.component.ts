@@ -1,9 +1,9 @@
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink, RouterLinkActive, Router } from '@angular/router';
-import { IconComponent, type IconName } from '../../shared/icon.component';
-import { SharedI18nModule } from '../../shared/shared-i18n.module';
-import { AuthStore } from '../../core/auth/auth.store';
+import { IconComponent, type IconName } from '../../../../shared/icon.component';
+import { SharedI18nModule } from '../../../../shared/shared-i18n.module';
+import { AuthStore } from '../../../../core/auth/auth.store';
 
 interface SidebarItem {
   labelKey: string;

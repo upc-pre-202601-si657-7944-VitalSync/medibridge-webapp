@@ -1,0 +1,45 @@
+import { Component, inject, signal, OnInit } from '@angular/core';
+import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+import { ProfilesContextStore } from '../../../profiles/application';
+import { AppointmentsApiService, type Appointment } from '../../infrastructure/api/appointments-api.service';
+import { SharedI18nModule } from '../../../../shared/shared-i18n.module';
+import { IconComponent } from '../../../../shared/icon.component';
+
+@Component({
+  selector: 'app-appointments-page',
+  standalone: true,
+  imports: [CommonModule, ReactiveFormsModule, SharedI18nModule, IconComponent],
+  template: `
+    <div class="page"><h1>Citas</h1>
+      <section class="section"><h2>Agendar Visita Familiar</h2>
+        <form [formGroup]="form" (ngSubmit)="onSchedule()" class="form-grid">
+          <input formControlName="startsAt" placeholder="Fecha (YYYY-MM-DDTHH:mm)" /><input formControlName="durationInMinutes" type="number" placeholder="Duración (min)" /><input formControlName="reason" placeholder="Motivo" />
+          <button type="submit" [disabled]="form.invalid || isSubmitting()">Agendar</button>
+        </form>
+      </section>
+      <section class="section"><h2>Próximas Citas</h2>
+        @if (loading()) { <p class="muted">Cargando...</p> }
+        @else if (appointments().length===0) { <div class="empty"><app-icon name="calendar" [size]="40"/><p>No hay citas</p></div> }
+        @else { @for (a of appointments(); track a.id) { <div class="card"><div class="card-header"><app-icon name="calendar" [size]="20"/><span>{{a.appointmentType==='FAMILY_VISIT'?'Visita Familiar':'Cita Médica'}}</span><span class="status">{{a.status}}</span></div><p>{{a.reason}}</p><p class="time">{{a.startsAt}} — {{a.endsAt}}</p></div> } }
+      </section>
+    </div>
+  `,
+  styles: [`.page{padding:2rem;max-width:700px;margin:0 auto}h1{font-size:1.5rem;font-weight:700;color:#0f172a;margin-bottom:1.5rem}h2{font-size:1.125rem;font-weight:600;color:#334155;margin-bottom:1rem}.section{margin-bottom:2rem;background:white;padding:1.5rem;border-radius:.75rem;box-shadow:0 1px 3px rgba(0,0,0,.06)}.form-grid{display:grid;gap:.75rem}input{padding:.625rem .75rem;border:1px solid #cbd5e1;border-radius:.5rem;font-family:inherit;font-size:.875rem}button{padding:.75rem;background:#2563eb;color:white;border:none;border-radius:.5rem;cursor:pointer;font-weight:600}.muted{color:#94a3b8}.empty{text-align:center;padding:2rem;color:#94a3b8}.card{padding:1rem;border:1px solid #e2e8f0;border-radius:.625rem;margin-bottom:.5rem}.card-header{display:flex;align-items:center;gap:.5rem;margin-bottom:.5rem;font-weight:600;font-size:.875rem}.status{font-size:.75rem;padding:.125rem .5rem;border-radius:1rem;background:#dbeafe;color:#1d4ed8}.time{font-size:.8125rem;color:#94a3b8;margin:0}`]
+})
+export class AppointmentsPageComponent implements OnInit {
+  private readonly api = inject(AppointmentsApiService);
+  private readonly context = inject(ProfilesContextStore);
+  readonly appointments = signal<Appointment[]>([]);
+  readonly loading = signal(true);
+  readonly isSubmitting = signal(false);
+  readonly scheduleError = signal<string | null>(null);
+  readonly form = inject(FormBuilder).nonNullable.group({
+    startsAt: ['', Validators.required],
+    durationInMinutes: [60, Validators.required],
+    reason: ['', Validators.required],
+  });
+  ngOnInit(): void { const pid = this.context.linkedPatientId(); if (pid) this.#load(pid); else this.loading.set(false); }
+  #load(pid: number): void { this.api.getByPatient(pid).subscribe({ next: d => this.appointments.set(d), error: () => this.loading.set(false), complete: () => this.loading.set(false) }); }
+  onSchedule(): void { const pid = this.context.linkedPatientId(); const fid = this.context.familyMemberProfileId(); if (!pid||!fid||this.form.invalid) return; this.isSubmitting.set(true); const v = this.form.getRawValue(); this.api.scheduleFamilyVisit({ patientId: pid, familyMemberProfileId: fid, startsAt: v.startsAt!, durationInMinutes: Number(v.durationInMinutes), reason: v.reason! }).subscribe({ next: () => { this.form.reset({ startsAt:'',durationInMinutes:60,reason:'' }); this.#load(pid); }, error: () => this.scheduleError.set('Error'), complete: () => this.isSubmitting.set(false) }); }
+}
