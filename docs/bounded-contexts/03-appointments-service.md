@@ -12,7 +12,32 @@
 | 2 | `POST` | `/appointments/family-visits` | JWT | Schedule family visit |
 | 3 | `GET` | `/appointments/{id}` | JWT | Get appointment by ID |
 | 4 | `GET` | `/appointments/patient/{patientId}` | JWT | Get appointments by patient |
-| 5 | `GET` | `/internal/appointments/patients/{id}/summary` | Internal | Get appointment summary |
+| 5 | `GET` | `/internal/appointments/patients/{id}/summary?startDate&endDate` | Internal | Get appointment summary |
+
+### POST /appointments/medical
+**Request:**
+```json
+{
+  "patientId": 1,
+  "doctorProfileId": 3,
+  "startsAt": "2026-07-02T10:00:00",
+  "durationInMinutes": 30,
+  "reason": "Chequeo general"
+}
+```
+**Response (201):**
+```json
+{
+  "id": 1,
+  "patientId": 1,
+  "doctorProfileId": 3,
+  "appointmentType": "MEDICAL",
+  "status": "SCHEDULED",
+  "startsAt": "2026-07-02T10:00:00",
+  "endsAt": "2026-07-02T10:30:00",
+  "reason": "Chequeo general"
+}
+```
 
 ### POST /appointments/family-visits
 **Request:**

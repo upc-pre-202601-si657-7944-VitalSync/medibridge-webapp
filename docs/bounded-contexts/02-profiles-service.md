@@ -57,6 +57,12 @@
 | 7 | `POST` | `/profiles/patients/{pid}/doctors/{did}` | JWT | Assign doctor to patient |
 | 8 | `POST` | `/profiles/patients/{pid}/family-members/{fid}` | JWT | Link family member to patient |
 
+#### POST /profiles/patients/{pid}/doctors/{did}
+**Request:** `{}`  
+**Auth:** Ownership check — doctor profile `userId` must match JWT user. Requires INSTITUTION subscription.  
+**Response (201):** `{ id: number, doctorProfileId: number, patientId: number, active: boolean }`  
+**Limits:** Must have active INSTITUTION subscription. Max patients = plan's `maxPatients`.
+
 #### POST /profiles/patients/{pid}/family-members/{fid}
 **Request:** `{}`  
 **Auth:** Ownership check — family profile `userId` must match JWT user  
