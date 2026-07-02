@@ -1,7 +1,7 @@
 import { Component, inject, signal, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ProfilesContextStore } from '../../../application';
-import { MedicationApiService, type Medication, type MedicationSchedule } from '../../../infrastructure/api/medication/medication-api.service';
+import { MedicationApiService, type Medication } from '../../../infrastructure/api/medication/medication-api.service';
 import { SharedI18nModule } from '../../../../../shared/shared-i18n.module';
 import { IconComponent } from '../../../../../shared/icon.component';
 
@@ -11,7 +11,7 @@ import { IconComponent } from '../../../../../shared/icon.component';
   imports: [CommonModule, SharedI18nModule, IconComponent],
   template: `
     <div class="page">
-      <h1>Medicación</h1>
+      <h1>Medicaci&oacute;n</h1>
       @if (loading()) { <p class="muted">Cargando...</p> }
       @else if (medications().length === 0) {
         <div class="empty"><app-icon name="pill" [size]="48" /><p>No hay medicamentos registrados</p></div>
@@ -21,11 +21,9 @@ import { IconComponent } from '../../../../../shared/icon.component';
             <app-icon name="pill" [size]="24" />
             <div class="info">
               <strong>{{ m.name }}</strong>
-              <span>{{ m.dosageAmount }} {{ m.dosageUnit }} — {{ m.administrationRoute }}</span>
+              <span>{{ m.dosageAmount }} {{ m.dosageUnit }} &mdash; {{ m.administrationRoute }}</span>
               <span class="stock">Stock: {{ m.stockQuantity }} (alerta: {{ m.lowStockThreshold }})</span>
-              @if (m.schedules?.length) {
-                <span class="schedule">Horarios: {{ m.schedules!.length }} activos</span>
-              }
+              @if (m.expirationDate) { <span class="expiry">Vence: {{ m.expirationDate }}</span> }
             </div>
           </div>
         }
@@ -48,7 +46,7 @@ import { IconComponent } from '../../../../../shared/icon.component';
 export class MedicationPageComponent implements OnInit {
   private readonly api = inject(MedicationApiService);
   private readonly context = inject(ProfilesContextStore);
-  readonly medications = signal<(Medication & { schedules?: MedicationSchedule[] })[]>([]);
+  readonly medications = signal<Medication[]>([]);
   readonly loading = signal(true);
 
   ngOnInit(): void {

@@ -111,7 +111,7 @@ export class AppointmentsPageComponent implements OnInit {
       durationInMinutes: Number(v.durationInMinutes),
       reason: v.reason!,
     }).subscribe({
-      next: () => { this.form.reset(); this.#load(pid); },
+      next: () => { this.form.reset({ startsAt: '', durationInMinutes: 60, reason: '' }); this.#load(pid); },
       error: () => this.scheduleError.set('Error al agendar la cita'),
       complete: () => this.isSubmitting.set(false),
     });

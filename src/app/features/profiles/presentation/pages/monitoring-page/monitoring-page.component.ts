@@ -18,15 +18,29 @@ import { IconComponent } from '../../../../../shared/icon.component';
       } @else {
         @for (o of observations(); track o.id) {
           <div class="card">
-            <app-icon name="activity" [size]="20" />
+            <div class="card-top">
+              <app-icon name="activity" [size]="20" />
+              <span class="date">{{ o.recordedAt }}</span>
+            </div>
             <div class="vitals">
-              <span>🩸 {{ o.systolicBloodPressure }}/{{ o.diastolicBloodPressure }} mmHg</span>
-              <span>🌡 {{ o.bodyTemperature }}°C</span>
-              <span>😣 Dolor: {{ o.painLevel }}/10</span>
-              <span>😊 {{ o.emotionalState }}</span>
+              <div class="vital">
+                <app-icon name="heart" [size]="16" />
+                <span>Presión: {{ o.systolicBloodPressure }}/{{ o.diastolicBloodPressure }} mmHg</span>
+              </div>
+              <div class="vital">
+                <span class="label">Temperatura</span>
+                <span>{{ o.bodyTemperature }}&deg;C</span>
+              </div>
+              <div class="vital">
+                <span class="label">Dolor</span>
+                <span>{{ o.painLevel }}/10</span>
+              </div>
+              <div class="vital">
+                <span class="label">Estado</span>
+                <span>{{ o.emotionalState }}</span>
+              </div>
             </div>
             @if (o.clinicalNotes) { <p class="notes">{{ o.clinicalNotes }}</p> }
-            <span class="date">{{ o.recordedAt }}</span>
           </div>
         }
       }
@@ -38,10 +52,13 @@ import { IconComponent } from '../../../../../shared/icon.component';
     .muted { color: #94a3b8; text-align: center; padding: 2rem; }
     .empty { text-align: center; padding: 3rem; color: #94a3b8; }
     .card { background: white; padding: 1.25rem; border-radius: 0.75rem; box-shadow: 0 1px 3px rgba(0,0,0,0.06); margin-bottom: 0.75rem; }
-    .vitals { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.5rem; margin: 0.75rem 0; }
-    .vitals span { font-size: 0.875rem; color: #334155; }
-    .notes { font-size: 0.8125rem; color: #64748b; margin: 0.5rem 0; }
+    .card-top { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.75rem; }
     .date { font-size: 0.75rem; color: #94a3b8; }
+    .vitals { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.75rem; margin-bottom: 0.75rem; }
+    .vital { display: flex; align-items: center; gap: 0.5rem; }
+    .vital span { font-size: 0.875rem; color: #334155; }
+    .label { font-size: 0.75rem !important; color: #94a3b8 !important; text-transform: uppercase; letter-spacing: 0.05em; display: block; }
+    .notes { font-size: 0.8125rem; color: #64748b; margin: 0; }
   `]
 })
 export class MonitoringPageComponent implements OnInit {
