@@ -1,55 +1,48 @@
 # Payments Service — API Reference
 
-**Service:** Subscriptions, Invoices & Payment Methods  
 **Base URL:** `https://medibridge-payments-service.onrender.com/api/v1`  
 **Version:** 2026-07-02
 
-## Endpoints
+---
 
-### Subscriptions
+## Family Support Network
 
-| # | Method | Path | Auth | Description |
-|---|---|---|---|---|
-| 1 | `POST` | `/subscriptions` | JWT | Create subscription |
-| 2 | `POST` | `/subscriptions/{id}/cancel` | JWT | Cancel subscription |
-| 3 | `POST` | `/subscriptions/{id}/renew` | JWT | Renew subscription |
-| 4 | `GET` | `/subscriptions/users/{userId}` | JWT | Get user subscription |
-| 5 | `GET` | `/subscriptions/users/{userId}/active` | JWT | Get active subscription |
-| 6 | `POST` | `/subscriptions/payment-methods` | JWT | Add payment method |
-
-### Invoices
+> `commercialLine = "FAMILY"` → `planType: FREE | FAMILY_PREMIUM`
 
 | # | Method | Path | Auth | Description |
 |---|---|---|---|---|
-| 7 | `GET` | `/invoices/users/{userId}` | JWT | Get user invoices |
+| 1 | `POST` | `/subscriptions` | JWT | Crear suscripción FAMILY. `{userId, commercialLine: "FAMILY", planType, billingCycle}` |
+| 2 | `POST` | `/subscriptions/{id}/cancel` | JWT | Cancelar suscripción |
+| 3 | `GET` | `/subscriptions/users/{userId}/active` | JWT | Ver suscripción activa → `{plan: {maxPatients}, status}` |
+| 4 | `GET` | `/invoices/users/{userId}` | JWT | Ver facturas |
+| 5 | `POST` | `/subscriptions/payment-methods` | JWT | Agregar método de pago. `{userId, brand, lastFourDigits, stripePaymentMethodId}` |
 
-### Stripe Webhook
+---
+
+## Care Staff
+
+> `commercialLine = "INSTITUTION"` → `planType: INSTITUTION_BASIC | INSTITUTION_PREMIUM`
 
 | # | Method | Path | Auth | Description |
 |---|---|---|---|---|
-| 8 | `POST` | `/stripe-webhooks` | Public | Stripe payment events |
+| 1 | `POST` | `/subscriptions` | JWT | Crear suscripción INSTITUTION. `{userId, commercialLine: "INSTITUTION", planType, billingCycle}` |
+| 2 | `POST` | `/subscriptions/{id}/cancel` | JWT | Cancelar suscripción |
+| 3 | `GET` | `/subscriptions/users/{userId}/active` | JWT | Ver suscripción activa |
+| 4 | `GET` | `/invoices/users/{userId}` | JWT | Ver facturas |
+| 5 | `POST` | `/subscriptions/payment-methods` | JWT | Agregar método de pago |
 
-### Internal
+---
 
-| # | Method | Path | Auth | Description |
-|---|---|---|---|---|
-| 9 | `GET` | `/internal/subscriptions/users/{userId}/active` | Internal | Get active subscription |
+## Enums
 
-### POST /subscriptions
-**Request:**
-```json
-{
-  "userId": 3,
-  "commercialLine": "FAMILY",
-  "planType": "FAMILY_PREMIUM",
-  "billingCycle": "MONTHLY"
-}
-```
-**CommercialLine enum:** `FAMILY`, `INSTITUTION`  
-**PlanType enum:** `FREE`, `FAMILY_PREMIUM`, `INSTITUTION_BASIC`, `INSTITUTION_PREMIUM`  
-**BillingCycle enum:** `MONTHLY`, `ANNUALLY`
+**CommercialLine:** `FAMILY` | `INSTITUTION`  
+**PlanType:** `FREE` | `FAMILY_PREMIUM` | `INSTITUTION_BASIC` | `INSTITUTION_PREMIUM`  
+**BillingCycle:** `MONTHLY` | `ANNUALLY`  
+**SubscriptionStatus:** `ACTIVE` | `CANCELLED` | `PAST_DUE` | `TRIALING`
 
-**Response (201):**
+---
+
+## Response: Subscription
 ```json
 {
   "id": 1,
@@ -70,8 +63,15 @@
   "currentPeriodEnd": "2026-08-02"
 }
 ```
-**SubscriptionStatus enum:** `ACTIVE`, `CANCELLED`, `PAST_DUE`, `TRIALING`
 
-### POST /subscriptions/payment-methods
-**Request:** `{ userId, brand: "Visa", lastFourDigits: "4242", stripePaymentMethodId: "pm_xxx" }`  
-**Response (201):** `{ id, userId, brand, lastFourDigits, stripePaymentMethodId }`
+## Stripe Webhook (público)
+
+| # | Method | Path | Auth | Description |
+|---|---|---|---|---|
+| — | `POST` | `/stripe-webhooks` | Public | Eventos de pago de Stripe |
+
+## Internal
+
+| # | Method | Path | Auth | Description |
+|---|---|---|---|---|
+| — | `GET` | `/internal/subscriptions/users/{userId}/active` | Internal | Suscripción activa (servicio a servicio) |

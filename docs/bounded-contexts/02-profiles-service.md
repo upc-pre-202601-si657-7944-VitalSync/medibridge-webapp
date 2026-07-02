@@ -4,85 +4,65 @@
 **Base URL:** `https://medibridge-profiles-service.onrender.com/api/v1`  
 **Version:** 2026-07-02
 
-## Endpoints
+---
 
-### Patient Profiles
+## Family Support Network
 
-| # | Method | Path | Auth | Description |
-|---|---|---|---|---|
-| 1 | `POST` | `/profiles/patients` | JWT | Create patient profile |
-| 2 | `GET` | `/profiles/patients/{id}` | JWT | Get patient by ID |
-
-#### POST /profiles/patients
-**Request:** `{ fullName: string }`  
-**Response (201):** `{ id: number, fullName: string }`
-
-#### GET /profiles/patients/{id}
-**Response (200):** `{ id: number, fullName: string }`
-
-### Family Member Profiles
+> Perfil de familiar vinculado a un paciente.
 
 | # | Method | Path | Auth | Description |
 |---|---|---|---|---|
-| 3 | `POST` | `/profiles/family-members` | JWT | Create family member profile |
-| 4 | `GET` | `/profiles/family-members/{id}` | JWT | Get family member by ID |
+| 1 | `POST` | `/profiles/family-members` | JWT | Crear perfil de familiar |
+| 2 | `GET` | `/profiles/family-members/{id}` | JWT | Ver perfil de familiar |
+| 3 | `POST` | `/profiles/patients/{pid}/family-members/{fid}` | JWT | Vincular familiar a paciente |
+| 4 | `GET` | `/profiles/patients/{id}` | JWT | Ver paciente vinculado |
+| 5 | `GET` | `/profiles/doctors/{id}` | JWT | Ver médico tratante |
 
-#### POST /profiles/family-members
+### POST /profiles/family-members
 **Request:** `{ fullName: string }`  
-**Auth:** Extracts `userId` from JWT `sub` → IAM `by-username`  
+**Auth:** Extrae `userId` del JWT `sub` → IAM `by-username`  
 **Response (201):** `{ id: number, userId: number, fullName: string }`
 
-#### GET /profiles/family-members/{id}
-**Response (200):** `{ id: number, userId: number, fullName: string }`
-
-### Doctor Profiles
-
-| # | Method | Path | Auth | Description |
-|---|---|---|---|---|
-| 5 | `POST` | `/profiles/doctors` | JWT | Create doctor profile |
-| 6 | `GET` | `/profiles/doctors/{id}` | JWT | Get doctor by ID |
-
-#### POST /profiles/doctors
-**Request:** `{ fullName: string }`  
-**Auth:** Extracts `userId` from JWT `sub` → IAM `by-username`  
-**Response (201):** `{ id: number, userId: number, fullName: string }`
-
-#### GET /profiles/doctors/{id}
-**Response (200):** `{ id: number, userId: number, fullName: string }`
-
-### Care Relationships
-
-| # | Method | Path | Auth | Description |
-|---|---|---|---|---|
-| 7 | `POST` | `/profiles/patients/{pid}/doctors/{did}` | JWT | Assign doctor to patient |
-| 8 | `POST` | `/profiles/patients/{pid}/family-members/{fid}` | JWT | Link family member to patient |
-
-#### POST /profiles/patients/{pid}/doctors/{did}
+### POST /profiles/patients/{pid}/family-members/{fid}
 **Request:** `{}`  
-**Auth:** Ownership check — doctor profile `userId` must match JWT user. Requires INSTITUTION subscription.  
-**Response (201):** `{ id: number, doctorProfileId: number, patientId: number, active: boolean }`  
-**Limits:** Must have active INSTITUTION subscription. Max patients = plan's `maxPatients`.
-
-#### POST /profiles/patients/{pid}/family-members/{fid}
-**Request:** `{}`  
-**Auth:** Ownership check — family profile `userId` must match JWT user  
+**Auth:** El `userId` del perfil familiar debe coincidir con el JWT  
 **Response (201):** `{ id: number, familyMemberProfileId: number, patientId: number, active: boolean }`  
-**Limits:** Free tier = 1 patient. FAMILY subscription = plan's `maxPatients`.
+**Límite:** Tier gratis = 1 paciente. Suscripción FAMILY = `maxPatients` del plan.
 
-### Internal
+---
+
+## Care Staff
+
+> Perfil de doctor / cuidador que atiende pacientes.
 
 | # | Method | Path | Auth | Description |
 |---|---|---|---|---|
-| 9 | `GET` | `/internal/profiles/patients/{id}/exists` | Internal | Check patient exists |
-| 10 | `GET` | `/internal/profiles/patients/{id}` | Internal | Get patient |
-| 11 | `GET` | `/internal/profiles/patients/{id}/care-team-members` | Internal | Get care team |
-| 12 | `GET` | `/internal/profiles/doctors/{did}/can-attend/{pid}` | Internal | Doctor access check |
-| 13 | `GET` | `/internal/profiles/family-members/{fid}/can-visit/{pid}` | Internal | Family access check |
-| 14 | `GET` | `/internal/profiles/users/{uid}/can-access/{pid}` | Internal | User access check |
+| 1 | `POST` | `/profiles/doctors` | JWT | Crear perfil de doctor |
+| 2 | `GET` | `/profiles/doctors/{id}` | JWT | Ver perfil de doctor |
+| 3 | `POST` | `/profiles/patients/{pid}/doctors/{did}` | JWT | Asignar doctor a paciente |
+| 4 | `GET` | `/profiles/patients/{id}` | JWT | Ver paciente asignado |
+| 5 | `GET` | `/profiles/family-members/{id}` | JWT | Ver familiar del paciente |
 
-## Segment Mapping
+### POST /profiles/doctors
+**Request:** `{ fullName: string }`  
+**Auth:** Extrae `userId` del JWT `sub` → IAM `by-username`  
+**Response (201):** `{ id: number, userId: number, fullName: string }`
 
-| Frontend Segment | Profiles Endpoints |
-|---|---|
-| **Family Support Network** | 3, 4, 8, 2, 6 |
-| **Care Staff** | 5, 6, 7, 2, 4 |
+### POST /profiles/patients/{pid}/doctors/{did}
+**Request:** `{}`  
+**Auth:** El `userId` del perfil doctor debe coincidir con el JWT. Requiere suscripción INSTITUTION.  
+**Response (201):** `{ id: number, doctorProfileId: number, patientId: number, active: boolean }`  
+**Límite:** Máx pacientes = `maxPatients` del plan INSTITUTION.
+
+---
+
+## Internal (servicio a servicio)
+
+| # | Method | Path | Auth | Description |
+|---|---|---|---|---|
+| 1 | `GET` | `/internal/profiles/patients/{id}/exists` | Internal | Verificar si existe paciente |
+| 2 | `GET` | `/internal/profiles/patients/{id}` | Internal | Obtener paciente |
+| 3 | `GET` | `/internal/profiles/patients/{id}/care-team-members` | Internal | Obtener equipo de cuidado |
+| 4 | `GET` | `/internal/profiles/doctors/{did}/can-attend/{pid}` | Internal | Verificar acceso doctor |
+| 5 | `GET` | `/internal/profiles/family-members/{fid}/can-visit/{pid}` | Internal | Verificar acceso familiar |
+| 6 | `GET` | `/internal/profiles/users/{uid}/can-access/{pid}` | Internal | Verificar acceso usuario genérico |
