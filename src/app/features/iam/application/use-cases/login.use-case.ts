@@ -17,7 +17,7 @@ export class LoginUseCase {
       tap((res) => {
         const user = mapAuthResponseToUser(res);
         this.authStore.setSession(res.token, user);
-        this.router.navigate(['/profiles']);
+        this.router.navigate(['/family/dashboard']);
       }),
       map(() => undefined),
     );

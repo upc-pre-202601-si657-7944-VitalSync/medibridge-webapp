@@ -9,7 +9,7 @@ export const routes: Routes = [
       ),
   },
   {
-    path: 'profiles',
+    path: 'family',
     loadChildren: () =>
       import('./features/profiles/presentation/profiles.routes').then(
         (m) => m.profilesRoutes,

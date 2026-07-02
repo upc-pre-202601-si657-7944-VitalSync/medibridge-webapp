@@ -27,7 +27,7 @@ interface SidebarItem {
             <a
               [routerLink]="item.route"
               routerLinkActive="active"
-              [routerLinkActiveOptions]="{ exact: item.route === '/profiles/dashboard' }"
+              [routerLinkActiveOptions]="{ exact: item.route === '/family/dashboard' }"
               class="nav-link"
             >
               <app-icon [name]="item.icon" [size]="18" />
@@ -147,16 +147,16 @@ export class FamilySidebarComponent {
   private readonly router = inject(Router);
 
   readonly menuItems: SidebarItem[] = [
-    { labelKey: 'profiles.sidebar.dashboard', icon: 'dashboard', route: '/profiles/dashboard' },
-    { labelKey: 'profiles.sidebar.familyProfile', icon: 'user', route: '/profiles/family-profile' },
-    { labelKey: 'profiles.sidebar.patient', icon: 'heart', route: '/profiles/patient' },
-    { labelKey: 'profiles.sidebar.appointments', icon: 'calendar', route: '/profiles/appointments' },
-    { labelKey: 'profiles.sidebar.medication', icon: 'pill', route: '/profiles/medication' },
-    { labelKey: 'profiles.sidebar.monitoring', icon: 'activity', route: '/profiles/monitoring' },
-    { labelKey: 'profiles.sidebar.messages', icon: 'message-circle', route: '/profiles/messages' },
-    { labelKey: 'profiles.sidebar.reports', icon: 'file-text', route: '/profiles/reports' },
-    { labelKey: 'profiles.sidebar.payments', icon: 'credit-card', route: '/profiles/payments' },
-    { labelKey: 'profiles.sidebar.settings', icon: 'settings', route: '/profiles/settings' },
+    { labelKey: 'profiles.sidebar.dashboard', icon: 'dashboard', route: '/family/dashboard' },
+    { labelKey: 'profiles.sidebar.familyProfile', icon: 'user', route: '/family/profile' },
+    { labelKey: 'profiles.sidebar.patient', icon: 'heart', route: '/family/patient' },
+    { labelKey: 'profiles.sidebar.appointments', icon: 'calendar', route: '/family/appointments' },
+    { labelKey: 'profiles.sidebar.medication', icon: 'pill', route: '/family/medication' },
+    { labelKey: 'profiles.sidebar.monitoring', icon: 'activity', route: '/family/monitoring' },
+    { labelKey: 'profiles.sidebar.messages', icon: 'message-circle', route: '/family/messages' },
+    { labelKey: 'profiles.sidebar.reports', icon: 'file-text', route: '/family/reports' },
+    { labelKey: 'profiles.sidebar.payments', icon: 'credit-card', route: '/family/payments' },
+    { labelKey: 'profiles.sidebar.settings', icon: 'settings', route: '/family/settings' },
   ];
 
   logout(): void {

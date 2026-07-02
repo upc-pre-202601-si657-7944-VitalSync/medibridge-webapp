@@ -36,7 +36,7 @@ export const profilesRoutes: Routes = [
         data: { icon: 'dashboard' as const, titleKey: 'profiles.sidebar.dashboard', descKey: 'profiles.sidebar.dashboard' },
       },
       {
-        path: 'family-profile',
+        path: 'profile',
         component: FamilyProfilePageComponent,
         canActivate: [roleGuard([UserRole.FAMILY_MEMBER])],
       },
