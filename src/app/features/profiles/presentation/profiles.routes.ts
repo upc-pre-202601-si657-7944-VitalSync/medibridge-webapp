@@ -6,6 +6,7 @@ import { DoctorViewPageComponent } from './pages/doctor-view-page/doctor-view-pa
 import { PlaceholderPageComponent } from './pages/placeholder-page/placeholder-page.component';
 import { ProfilesFacade } from '../application';
 import { CreateFamilyMemberUseCase } from '../application/use-cases/create-family-member.use-case';
+import { GetFamilyMemberUseCase } from '../application/use-cases/get-family-member.use-case';
 import { LinkFamilyToPatientUseCase } from '../application/use-cases/link-family-to-patient.use-case';
 import { GetPatientUseCase } from '../application/use-cases/get-patient.use-case';
 import { GetDoctorUseCase } from '../application/use-cases/get-doctor.use-case';
@@ -20,6 +21,7 @@ export const profilesRoutes: Routes = [
     providers: [
       ProfilesApiService,
       CreateFamilyMemberUseCase,
+      GetFamilyMemberUseCase,
       LinkFamilyToPatientUseCase,
       GetPatientUseCase,
       GetDoctorUseCase,
