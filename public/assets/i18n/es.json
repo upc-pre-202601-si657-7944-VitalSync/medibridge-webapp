@@ -62,9 +62,20 @@
   },
   "profiles": {
     "sidebar": {
+      "dashboard": "Dashboard",
       "familyProfile": "Mi Perfil",
       "patient": "Mi Paciente",
-      "doctor": "Médico"
+      "doctor": "Médico",
+      "appointments": "Citas",
+      "medication": "Medicación",
+      "monitoring": "Monitoreo",
+      "messages": "Mensajes",
+      "reports": "Reportes",
+      "payments": "Pagos",
+      "settings": "Configuración"
+    },
+    "placeholder": {
+      "comingSoon": "Esta sección estará disponible próximamente."
     },
     "family": {
       "title": "Mi Perfil de Familiar",

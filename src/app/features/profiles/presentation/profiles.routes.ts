@@ -3,6 +3,7 @@ import { ProtectedLayoutComponent } from '../../../layout/protected-layout.compo
 import { FamilyProfilePageComponent } from './pages/family-profile-page/family-profile-page.component';
 import { PatientViewPageComponent } from './pages/patient-view-page/patient-view-page.component';
 import { DoctorViewPageComponent } from './pages/doctor-view-page/doctor-view-page.component';
+import { PlaceholderPageComponent } from './pages/placeholder-page/placeholder-page.component';
 import { ProfilesFacade } from '../application';
 import { CreateFamilyMemberUseCase } from '../application/use-cases/create-family-member.use-case';
 import { LinkFamilyToPatientUseCase } from '../application/use-cases/link-family-to-patient.use-case';
@@ -25,7 +26,13 @@ export const profilesRoutes: Routes = [
       ProfilesFacade,
     ],
     children: [
-      { path: '', redirectTo: 'family-profile', pathMatch: 'full' },
+      { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
+      {
+        path: 'dashboard',
+        component: PlaceholderPageComponent,
+        canActivate: [roleGuard([UserRole.FAMILY_MEMBER])],
+        data: { icon: 'dashboard' as const, titleKey: 'profiles.sidebar.dashboard', descKey: 'profiles.sidebar.dashboard' },
+      },
       {
         path: 'family-profile',
         component: FamilyProfilePageComponent,
@@ -50,6 +57,48 @@ export const profilesRoutes: Routes = [
         path: 'doctor/:id',
         component: DoctorViewPageComponent,
         canActivate: [roleGuard([UserRole.FAMILY_MEMBER])],
+      },
+      {
+        path: 'appointments',
+        component: PlaceholderPageComponent,
+        canActivate: [roleGuard([UserRole.FAMILY_MEMBER])],
+        data: { icon: 'calendar' as const, titleKey: 'profiles.sidebar.appointments', descKey: 'profiles.placeholder.comingSoon' },
+      },
+      {
+        path: 'medication',
+        component: PlaceholderPageComponent,
+        canActivate: [roleGuard([UserRole.FAMILY_MEMBER])],
+        data: { icon: 'pill' as const, titleKey: 'profiles.sidebar.medication', descKey: 'profiles.placeholder.comingSoon' },
+      },
+      {
+        path: 'monitoring',
+        component: PlaceholderPageComponent,
+        canActivate: [roleGuard([UserRole.FAMILY_MEMBER])],
+        data: { icon: 'activity' as const, titleKey: 'profiles.sidebar.monitoring', descKey: 'profiles.placeholder.comingSoon' },
+      },
+      {
+        path: 'messages',
+        component: PlaceholderPageComponent,
+        canActivate: [roleGuard([UserRole.FAMILY_MEMBER])],
+        data: { icon: 'message-circle' as const, titleKey: 'profiles.sidebar.messages', descKey: 'profiles.placeholder.comingSoon' },
+      },
+      {
+        path: 'reports',
+        component: PlaceholderPageComponent,
+        canActivate: [roleGuard([UserRole.FAMILY_MEMBER])],
+        data: { icon: 'file-text' as const, titleKey: 'profiles.sidebar.reports', descKey: 'profiles.placeholder.comingSoon' },
+      },
+      {
+        path: 'payments',
+        component: PlaceholderPageComponent,
+        canActivate: [roleGuard([UserRole.FAMILY_MEMBER])],
+        data: { icon: 'credit-card' as const, titleKey: 'profiles.sidebar.payments', descKey: 'profiles.placeholder.comingSoon' },
+      },
+      {
+        path: 'settings',
+        component: PlaceholderPageComponent,
+        canActivate: [roleGuard([UserRole.FAMILY_MEMBER])],
+        data: { icon: 'settings' as const, titleKey: 'profiles.sidebar.settings', descKey: 'profiles.placeholder.comingSoon' },
       },
     ],
   },

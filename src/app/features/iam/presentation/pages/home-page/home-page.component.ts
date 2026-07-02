@@ -1,4 +1,5 @@
 import { Component, inject } from '@angular/core';
+import { RouterLink } from '@angular/router';
 import { AuthStore } from '../../../../../core/auth/auth.store';
 import { IamFacade } from '../../../application';
 import { SharedI18nModule } from '../../../../../shared/shared-i18n.module';
@@ -6,7 +7,7 @@ import { SharedI18nModule } from '../../../../../shared/shared-i18n.module';
 @Component({
   selector: 'app-home-page',
   standalone: true,
-  imports: [SharedI18nModule],
+  imports: [SharedI18nModule, RouterLink],
   templateUrl: './home-page.component.html',
   styles: [
     `
@@ -63,6 +64,36 @@ import { SharedI18nModule } from '../../../../../shared/shared-i18n.module';
 
       .home-info strong {
         color: #0f172a;
+      }
+
+      .home-actions {
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+        margin-bottom: 1rem;
+      }
+
+      .profiles-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        height: 3rem;
+        padding: 0;
+        background: #2563eb;
+        color: white;
+        border: none;
+        border-radius: 0.875rem;
+        font-size: 0.9375rem;
+        font-weight: 600;
+        font-family: inherit;
+        text-decoration: none;
+        cursor: pointer;
+        transition: background 0.15s;
+      }
+
+      .profiles-btn:hover {
+        background: #1d4ed8;
       }
 
       .logout-btn {

@@ -8,5 +8,10 @@
     {{ 'auth.home.info' | translate }}
   </p>
 
-  <button type="button" class="logout-btn" (click)="logout()">{{ 'auth.home.logout' | translate }}</button>
+  <div class="home-actions">
+    <a class="profiles-btn" routerLink="/profiles" role="button">
+      Ir a Profiles
+    </a>
+    <button type="button" class="logout-btn" (click)="logout()">{{ 'auth.home.logout' | translate }}</button>
+  </div>
 </div>

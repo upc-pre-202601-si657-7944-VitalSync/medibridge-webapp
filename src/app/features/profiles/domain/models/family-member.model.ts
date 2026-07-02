@@ -1,5 +1,5 @@
 export interface FamilyMember {
-  readonly id: string;
-  readonly userId: string;
+  readonly id: number;
+  readonly userId: number;
   readonly fullName: string;
 }

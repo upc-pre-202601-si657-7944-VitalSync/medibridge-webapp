@@ -62,9 +62,20 @@
   },
   "profiles": {
     "sidebar": {
+      "dashboard": "Dashboard",
       "familyProfile": "My Profile",
       "patient": "My Patient",
-      "doctor": "Doctor"
+      "doctor": "Doctor",
+      "appointments": "Appointments",
+      "medication": "Medication",
+      "monitoring": "Monitoring",
+      "messages": "Messages",
+      "reports": "Reports",
+      "payments": "Payments",
+      "settings": "Settings"
+    },
+    "placeholder": {
+      "comingSoon": "This section will be available soon."
     },
     "family": {
       "title": "My Family Profile",

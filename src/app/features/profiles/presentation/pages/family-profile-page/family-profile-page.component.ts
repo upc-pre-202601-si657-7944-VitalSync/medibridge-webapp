@@ -71,7 +71,7 @@ export class FamilyProfilePageComponent {
 
     this.facade.createFamilyMember(data).subscribe({
       next: (familyMember) => {
-        this.contextStore.setFamilyMemberProfileId(Number(familyMember.id));
+        this.contextStore.setFamilyMemberProfileId(familyMember.id);
       },
       error: () => {
         this.isSubmitting.set(false);

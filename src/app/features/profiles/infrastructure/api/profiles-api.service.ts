@@ -1,7 +1,6 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { environment } from '../../../../core/config/environment';
 import type { FamilyMember, Patient, Doctor } from '../../domain';
 
 export interface CreateFamilyMemberPayload {
@@ -11,7 +10,7 @@ export interface CreateFamilyMemberPayload {
 @Injectable()
 export class ProfilesApiService {
   private readonly http = inject(HttpClient);
-  private readonly baseUrl = `${environment.apiBaseUrl}/profiles`;
+  private readonly baseUrl = 'https://medibridge-profiles-service.onrender.com/api/v1/profiles';
 
   createFamilyMember(payload: CreateFamilyMemberPayload): Observable<FamilyMember> {
     return this.http.post<FamilyMember>(`${this.baseUrl}/family-members`, payload);
